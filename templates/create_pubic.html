@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block title %} Создание статьи {% endblock %}
+
+
+{% block head %}
+
+<h1>Создаем статью</h1>
+
+{% endblock %}
+{% block content %}
+
+<form method="POST">
+    {{ form.as_p }}
+    <button type="submit">Создать</button>
+</form>
+
+{% endblock %}
+{% block foot %}
+
+
+{% endblock %}
+

@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block title %} Темы {% endblock %}
+
+
+{% block head %}
+
+<h1>Все записи:</h1>
+
+{% endblock %}
+{% block content %}
+
+{% for i in view %}
+<h2>Название: {{ i.title }}</h2>
+<h6>{{ i.date }}</h6>
+
+{% endfor %}
+{% endblock %}
+{% block foot %}
+
+
+{% endblock %}
+
