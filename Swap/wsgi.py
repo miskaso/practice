@@ -1,5 +1,5 @@
 """
-WSGI config for Django_Team_Project_2 project.
+WSGI config for Swap project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Django_Team_Project_2.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Swap.settings')
 
 application = get_wsgi_application()

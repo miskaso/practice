@@ -1,5 +1,5 @@
 """
-URL configuration for Django_Team_Project_2 project.
+URL configuration for Swap project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -20,6 +20,6 @@ from django.contrib.auth.views import LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('Django_Team_App.urls')),
+    path('', include('main.urls')),
     path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
 ]
