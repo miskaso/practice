@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %} Редактировать статью {% endblock %}
+
+
+{% block head %}
+<h1>Редактировать статью</h1>
+
+{% endblock %}
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock %}
+{% block foot %}
+
+
+{% endblock %}
+

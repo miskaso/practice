@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+
+{% block title %} {{ detail.title }} {% endblock %}
+
+
+{% block head %}
+
+
+<h1>{{ detail.title }} </h1>
+<small>Категория: {{ detail.category.name }} <br>
+Теги: {{ detail.teg }} <br>
+Автор: {{ detail.user }} <br>
+Дата создания: {{ detail.date }}
+</small>
+
+{% endblock %}
+{% block content %}
+<p>
+{{ detail.text }}
+</p>
+
+<hr>
+<h4>Комментарии:</h4>
+<hr>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Отправить</button>
+</form><div style="background-color: #b1cd3274">
+{% for i in comments %}
+<hr><div
+        style="background-color: #95ff00cb"><ul>
+    <li><p>{{ i }}<br>
+    {{ i.text }}<br>
+    {{ i.datetime }}</p></li>
+</ul>
+    {% if user.username == 'admin' %}
+<form method="POST" action="{% url 'delete_comment' %}">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ i.id }}">
+    <small><button type="submit">Удалить</button></small>
+</form>
+    {% endif %}
+</div>
+{% endfor %}<hr></div>
+{% endblock %}
+{% block foot %}
+
+<a href="{% url 'allpublic' %}" class="btn btn-primary">Назад
+</a><br>
+<a href="{% url 'public_edit' detail.id %}" class="btn btn-warning">Изменить
+</a><br>
+<form method="post" action="{% url 'delete' %}">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ detail.id }}">
+    <button type="submit" class="btn btn-danger">Удалить</button>
+</form>
+{% endblock %}
+
