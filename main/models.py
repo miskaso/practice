@@ -25,7 +25,7 @@ class Public(models.Model):
     date = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     teg = models.TextField()
-    public = models.ManyToManyField(Category)
+    category = models.ManyToManyField(Category, related_name='publics')
 
     def __str__(self):
         return self.title
