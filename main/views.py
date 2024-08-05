@@ -63,8 +63,9 @@ def delete_comment(req):
     if req.method == 'POST':
         mes_id = req.POST.get('id')
         chat = get_object_or_404(Comment, id=mes_id)
+        public = chat.public.id
         chat.delete()
-        return redirect('detail', pk=req.pk)
+        return redirect('detail', pk=public)
 
 
 def create_public(req):
@@ -98,3 +99,4 @@ def delete_public(req):
         public = get_object_or_404(Public, id=pub_id)
         public.delete()
         return redirect('../public/')
+

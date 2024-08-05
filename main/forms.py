@@ -44,6 +44,9 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['text']
 
+
+
+
 # class RedactorPublicForm(forms.ModelForm):
 #     title = forms.CharField(max_length=55)
 #     text = forms.TextInput()
