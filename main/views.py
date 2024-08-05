@@ -11,8 +11,8 @@ from django.views.generic import ListView, DetailView, UpdateView
 
 @login_required
 def home_page(request):
-    home_page_1 = ['Приветствуем на главную страницу!']
-    return render(request, 'home_page.html', {'home_page_1': home_page_1})
+    home_page_1 = ['Приветствуем на главной странице!']
+    return render(request, 'view_public.html', {'home_page_1': home_page_1})
 
 
 class ViewPublic(ListView):

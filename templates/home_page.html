@@ -1,12 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% for i in home_page_1 %}
+{% extends 'layout.html' %}
+
+{% block title %} {% endblock %}
+
+
+{% block head %}
+
+<h1>{% for i in home_page_1 %}
 {{ i }}
-{% endfor %}
-</body>
-</html>
+{% endfor %}</h1>
+
+{% endblock %}
+{% block content %}
+
+<a href="{% url 'allpublic' %}" class="btn btn-primary">Статьи</a>
+<!--<a href="{% url 'allpublic' %}" class="btn btn-warning">Профиль</a>-->
+
+{% endblock %}
+{% block foot %}
+
+
+{% endblock %}
+

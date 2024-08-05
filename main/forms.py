@@ -4,21 +4,21 @@ from django.contrib.auth.models import User
 
 
 class RegisterForm(forms.ModelForm):
-    user = forms.CharField(max_length=255)
+    username = forms.CharField(max_length=255)
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
     company = forms.CharField(max_length=255)
     job_title = forms.CharField(max_length=255)
     description = forms.CharField(max_length=255)
-    social_links = forms.CharField(max_length=255)
+    social_links = forms.TextInput()
 
     class Meta:
         model = Profile
-        fields = ['user', 'email', 'password', 'company', 'job_title', 'description', 'social_links']
+        fields = ['username', 'email', 'password', 'company', 'job_title', 'description', 'social_links']
 
     def save(self, commit=True):
         user = User.objects.create_user(
-            user=self.cleaned_data['user'],
+            username=self.cleaned_data['username'],
             email=self.cleaned_data['email'],
             password=self.cleaned_data['password']
         )

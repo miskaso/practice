@@ -5,8 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-    login = models.CharField(max_length=55)
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     company = models.CharField(max_length=255)
     job_title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
