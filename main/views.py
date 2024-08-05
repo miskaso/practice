@@ -1,23 +1,30 @@
+
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Comment, Public
 from django.contrib.auth.models import User
-from .forms import CreatePublicForm, CommentForm
+from .forms import CreatePublicForm, CommentForm, RegisterForm
 from django.views.generic import ListView, DetailView, UpdateView
 
 
 # Create your views here.
 
-
-def index(req):
-    return render(req, 'index.html')
-
-
-class ViewPublic(ListView):
-    model = Public
-    template_name = 'view_public.html'
-    context_object_name = 'view'
+@login_required
+def home_page(request):
+    home_page_1 = ['Приветствуем на главную страницу!']
+    response = render(request, 'home_page.html', {'home_page_1': home_page_1})
+    return response
 
 
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+
+          
 class DetailViewPublic(DetailView):
     model = Public
     template_name = 'detail_public.html'
@@ -53,6 +60,7 @@ def delete_comment(req):
         return redirect('detail', pk=req.pk)
 
 
+
 def create_public(req):
     if req.method == 'POST':
         form = CreatePublicForm(req.POST)
@@ -62,6 +70,9 @@ def create_public(req):
             result.save()
             return redirect('allpublic')
     else:
+        form = RegisterForm()
+    return render(request, 'registration/register.html', {'form': form})
+
         form = CreatePublicForm()
     return render(req, 'create_pubic.html', {'form': form})
 
