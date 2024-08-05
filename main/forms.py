@@ -1,6 +1,6 @@
 from django import forms
-from .models import Public, Category, Comment
-
+from .models import Public, Category, Comment, Profile
+from django.contrib.auth.models import User
 
 
 class RegisterForm(forms.ModelForm):
@@ -20,7 +20,8 @@ class RegisterForm(forms.ModelForm):
         user = User.objects.create_user(
             user=self.cleaned_data['user'],
             email=self.cleaned_data['email'],
-            password=self.cleaned_data['password'])
+            password=self.cleaned_data['password']
+        )
         profile = Profile(user=user, company=self.cleaned_data['company'],
                           job_title=self.cleaned_data['job_title'],
                           description=self.cleaned_data['description'],

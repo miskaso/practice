@@ -12,9 +12,13 @@ from django.views.generic import ListView, DetailView, UpdateView
 @login_required
 def home_page(request):
     home_page_1 = ['Приветствуем на главную страницу!']
-    response = render(request, 'home_page.html', {'home_page_1': home_page_1})
-    return response
+    return render(request, 'home_page.html', {'home_page_1': home_page_1})
 
+
+class ViewPublic(ListView):
+    model = Public
+    template_name = 'view_public.html'
+    context_object_name = 'view'
 
 
 def register(request):
@@ -23,8 +27,11 @@ def register(request):
         if form.is_valid():
             form.save()
             return redirect('login')
+    else:
+        form = RegisterForm()
+    return render(request, 'registration/register.html', {'form': form})
 
-          
+
 class DetailViewPublic(DetailView):
     model = Public
     template_name = 'detail_public.html'
@@ -60,7 +67,6 @@ def delete_comment(req):
         return redirect('detail', pk=req.pk)
 
 
-
 def create_public(req):
     if req.method == 'POST':
         form = CreatePublicForm(req.POST)
@@ -70,9 +76,6 @@ def create_public(req):
             result.save()
             return redirect('allpublic')
     else:
-        form = RegisterForm()
-    return render(request, 'registration/register.html', {'form': form})
-
         form = CreatePublicForm()
     return render(req, 'create_pubic.html', {'form': form})
 

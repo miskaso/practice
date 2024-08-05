@@ -5,11 +5,15 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    login = models.CharField(max_length=55)
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
     company = models.CharField(max_length=255)
     job_title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     social_links = models.TextField()
+
+    def __str__(self):
+        return self.login
 
 
 class Category(models.Model):
