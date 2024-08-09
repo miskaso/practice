@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block title %} {% endblock %}
+
+
+{% block head %}
+
+<h1>Все статьи:</h1>
+
+{% endblock %}
+{% block content %}
+
+<form method="get" action="{% url 'search' %}">
+        <label for="id_category">Фильтр по категории:</label>
+        <select id="id_category" name="category">
+            <option value="">Все категории</option>
+            {% for category in categories %}
+                <option value="{{ category }}" {% if request.GET.category == category %}selected{% endif %}>{{ category }}</option>
+
+            {% endfor %}
+        </select>
+        <button type="submit">Фильтр</button>
+    </form>
+{% for i in categories %}
+{{ i.id }}
+{% endfor %}
+<ul>
+        {% for product in products %}
+            <li>
+                <a href="{% url 'product_detail' product.slug %}">{{
+                    product.title }}</a> - {{ product.text }} - {{
+                product.category }} - {{ product.datetime }}
+            </li>
+        {% empty %}
+            <li>Продуктов не найдено</li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}
+{% block foot %}
+
+
+{% endblock %}
+

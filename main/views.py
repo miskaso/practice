@@ -1,7 +1,7 @@
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Comment, Public
+from .models import Comment, Public, Category
 from django.contrib.auth.models import User
 from .forms import CreatePublicForm, CommentForm, RegisterForm
 from django.views.generic import ListView, DetailView, UpdateView
@@ -12,7 +12,28 @@ from django.views.generic import ListView, DetailView, UpdateView
 @login_required
 def home_page(request):
     home_page_1 = ['Приветствуем на главной странице!']
-    return render(request, 'view_public.html', {'home_page_1': home_page_1})
+    return render(request, 'index.html', {'home_page_1': home_page_1})
+
+def product_list(request):
+    selected_category = request.GET.get('category')
+    products = Product.objects.all()
+    if selected_category:
+        products = products.filter(category=selected_category)
+    categories = Product.objects.values_list('category', flat=True).distinct()
+    return render(request, 'product_list.html', {
+        'products': products,
+        'categories': categories,
+        'selected_category': selected_category
+    })
+
+
+def search(request):
+    category = request.GET.get('category')
+    products = Public.objects.filter(category=category)
+    categories = Category.objects.all()
+    return render(request, 'category.html', {'products': products,
+            'categories': categories,
+            'select': category})
 
 
 class ViewPublic(ListView):

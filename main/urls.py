@@ -12,5 +12,6 @@ urlpatterns = [
     path('public/<int:pk>/edit/', views.RedactorPublic.as_view(),
          name='public_edit'),
     path('delete/', views.delete_public, name='delete'),
-    path('delete_comment/', views.delete_comment, name='delete_comment')
+    path('delete_comment/', views.delete_comment, name='delete_comment'),
+    path('public/category/', views.search, name='search'),
 ]
