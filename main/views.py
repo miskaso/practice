@@ -14,18 +14,6 @@ def home_page(request):
     home_page_1 = ['Приветствуем на главной странице!']
     return render(request, 'index.html', {'home_page_1': home_page_1})
 
-def product_list(request):
-    selected_category = request.GET.get('category')
-    products = Product.objects.all()
-    if selected_category:
-        products = products.filter(category=selected_category)
-    categories = Product.objects.values_list('category', flat=True).distinct()
-    return render(request, 'product_list.html', {
-        'products': products,
-        'categories': categories,
-        'selected_category': selected_category
-    })
-
 
 def search(request):
     category = request.GET.get('category')
