@@ -8,7 +8,9 @@
 
 <h1>{{ detail.title }} </h1>
 <small>Категория: {{ detail.category.name }} <br>
-Теги: {{ detail.teg }} <br>
+Теги: {% for i in detail.teg %}
+    {{ i }}
+    {% endfor %}<br>
 Автор: {{ detail.user }} <br>
 Дата создания: {{ detail.date }}
 </small>

@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block title %} Профиль {% endblock %}
+
+
+{% block head %}
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <span class="navbar-text">
+      <h1>Профиль</h1>
+    </span>
+  </div>
+</nav>
+
+{% endblock %}
+{% block content %}
+<div class="container">
+
+
+Имя: {{ profile.user.username }}<br>
+Компания: {{ profile.company }}<br>
+Должность: {{ profile.job_title }}<br>
+Описание: {{ profile.description }}<br>
+Ссылки: {{ profile.social_links }}<br><br><br>
+<a href="{% url 'register' %}" class="btn btn-warning">Редактировать</a>
+</div>
+{% endblock %}
+{% block foot %}
+
+
+{% endblock %}
+

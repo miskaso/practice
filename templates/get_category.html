@@ -1,33 +1,36 @@
 {% extends 'layout.html' %}
 
-{% block title %} Темы {% endblock %}
+{% block title %} {{ category }} {% endblock %}
 
 
 {% block head %}
-<nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
-    <span class="navbar-text">
-      <h1>Все записи:</h1>
-    </span>
-  </div>
-</nav>
 
-
+<h1> {{ category }} </h1>
 {% endblock %}
 {% block content %}
 
-{% for i in view %}
+{% for i in result %}
 <h2><small>Название:</small> <b>{{ i.title }}</b></h2>
 <h6> {{ i.date }}</h6><a href="{% url 'detail' i.id %}"
                          class="btn btn-primary">Открыть
 </a>   <a href="{% url 'public_edit' i.id %}" class="btn btn-warning">Изменить
 </a>
-
+{% empty %}
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <span class="navbar-text">
+      <h4>Записей этой категории пока не добавлено.</h4>
+    </span>
+  </div>
+</nav>
 {% endfor %}
+
+
 {% endblock %}
 {% block foot %}
-<hr><div>
-<a href="{% url 'create' %}" class="btn btn-danger">Создать статью</a>
-</div><hr>
+
+<a href="{% url 'category' %}" class="btn btn-primary">Назад</a>
+
+
 {% endblock %}
 

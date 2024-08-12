@@ -6,6 +6,8 @@
 <h1>Hellow world</h1>
 {% endblock %}
 {% block content %}
+<a href="{% url 'category' %}" class="btn btn-warning">Категории</a>
+<br><br>
 <a href="{% url 'allpublic' %}"
                          class="btn btn-primary">К статьям
 </a>

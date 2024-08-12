@@ -1,10 +1,12 @@
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Comment, Public, Category
+from .models import Comment, Public, Category, Profile
 from django.contrib.auth.models import User
 from .forms import CreatePublicForm, CommentForm, RegisterForm
 from django.views.generic import ListView, DetailView, UpdateView
+from django.db.models import Q
+from django.contrib.auth import login, logout, authenticate
 
 
 # Create your views here.
@@ -15,13 +17,42 @@ def home_page(request):
     return render(request, 'index.html', {'home_page_1': home_page_1})
 
 
-def search(request):
-    category = request.GET.get('category')
-    products = Public.objects.filter(category=category)
-    categories = Category.objects.all()
-    return render(request, 'category.html', {'products': products,
-            'categories': categories,
-            'select': category})
+@login_required
+def get_search(request):
+    data = request.GET.get('data')
+
+    q_object = Q()
+
+    if data.isdigit():
+        search_results = Public.objects.all()
+        return render(request, 'search.html', {'search': search_results})
+    else:
+
+        q_object |= (Q(title__icontains=data) | Q(
+            user__username__icontains=data)
+                     | Q(
+            teg__icontains=data))
+
+    search_results = Public.objects.filter(q_object)
+
+    return render(request, 'search.html', {'search': search_results})
+
+@login_required
+def categories(request):
+    category = Category.objects.all()
+    return render(request, 'category.html', {'category': category})
+
+
+@login_required
+def get_category(request, name):
+    category = get_object_or_404(Category, name=name)
+
+    if category:
+        result = Public.objects.filter(category=category)
+        return render(request, 'get_category.html', {'result': result,
+                                                     'category': category})
+    else:
+        redirect('category')
 
 
 class ViewPublic(ListView):
@@ -69,6 +100,7 @@ class DetailViewPublic(DetailView):
         return self.render_to_response(context)
 
 
+@login_required
 def delete_comment(req):
     if req.method == 'POST':
         mes_id = req.POST.get('id')
@@ -78,12 +110,14 @@ def delete_comment(req):
         return redirect('detail', pk=public)
 
 
+@login_required
 def create_public(req):
     if req.method == 'POST':
         form = CreatePublicForm(req.POST)
         if form.is_valid():
             result = form.save(commit=False)
             result.user = req.user
+            result.teg = [i for i in result.teg.split(',')]
             result.save()
             return redirect('allpublic')
     else:
@@ -103,6 +137,7 @@ class RedactorPublic(UpdateView):
         return public
 
 
+@login_required
 def delete_public(req):
     if req.method == 'POST':
         pub_id = req.POST.get('id')
@@ -110,3 +145,16 @@ def delete_public(req):
         public.delete()
         return redirect('../public/')
 
+
+def get_profile(request):
+    profile = Profile.objects.get(id=request.user.id)
+    if profile:
+        return render(request, 'profile.html', {'profile': profile})
+    else:
+        redirect('login')
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect('login')
