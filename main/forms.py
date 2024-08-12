@@ -32,11 +32,37 @@ class RegisterForm(forms.ModelForm):
 
       
 class CreatePublicForm(forms.ModelForm):
-    category = forms.ModelChoiceField(queryset=Category.objects.all(),widget=forms.Select)
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.Select, label='Категории')
 
     class Meta:
         model = Public
         fields = ['title', 'text', 'teg', 'category']
+
+        labels = {
+            'title': 'Название',
+            'text': 'Текст',
+            'teg': 'Теги',
+
+        }
+
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Укажите название статьи'}),
+            'text': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Ваша мысль )'}),
+            'teg': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Укажите теги через запятую'}),
+
+        }
+
+        error_messages = {
+            'title': {
+                'required': 'Пожалуйста, введите название статьи',
+                'max_length': 'Название статьи не должно превышать 10 символов'
+            },
+            'text': {
+                'required': 'Это поле не может быть пустым'
+            }
+
+
+        }
 
 
 class CommentForm(forms.ModelForm):
